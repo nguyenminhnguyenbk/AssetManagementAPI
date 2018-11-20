@@ -1,0 +1,709 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="QLCSVCModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Asset">
+          <Key>
+            <PropertyRef Name="AssetId" />
+          </Key>
+          <Property Name="AssetId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AssetName" Type="nvarchar" MaxLength="50" />
+          <Property Name="AssetImage" Type="varchar" MaxLength="50" />
+          <Property Name="IsDeleted" Type="bit" />
+        </EntityType>
+        <EntityType Name="AssetInRoom">
+          <Key>
+            <PropertyRef Name="AssetInRoomId" />
+          </Key>
+          <Property Name="AssetInRoomId" Type="int" Nullable="false" />
+          <Property Name="AssetId" Type="int" />
+          <Property Name="RoomId" Type="int" />
+          <Property Name="StatusAssetId" Type="int" />
+          <Property Name="IsDeleted" Type="bit" />
+        </EntityType>
+        <EntityType Name="RequestAsset">
+          <Key>
+            <PropertyRef Name="RequestAssetId" />
+          </Key>
+          <Property Name="RequestAssetId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AssetId" Type="int" />
+          <Property Name="RequestTypeId" Type="int" />
+          <Property Name="RoomId" Type="int" />
+          <Property Name="RequestBy" Type="int" />
+          <Property Name="StatusRequestId" Type="int" />
+          <Property Name="IsDeleted" Type="bit" />
+        </EntityType>
+        <EntityType Name="RequestType">
+          <Key>
+            <PropertyRef Name="RequestTypeId" />
+          </Key>
+          <Property Name="RequestTypeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RequestTypeName" Type="nvarchar" MaxLength="50" />
+          <Property Name="IsDeleted" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Right">
+          <Key>
+            <PropertyRef Name="RightId" />
+          </Key>
+          <Property Name="RightId" Type="int" Nullable="false" />
+          <Property Name="RightName" Type="nvarchar" MaxLength="50" />
+          <Property Name="IsDeleted" Type="bit" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="RoleId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RoleName" Type="nvarchar" MaxLength="50" />
+          <Property Name="IsDeleted" Type="bit" />
+        </EntityType>
+        <EntityType Name="RoleRight">
+          <Key>
+            <PropertyRef Name="RoleRightId" />
+          </Key>
+          <Property Name="RoleRightId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RoleId" Type="int" />
+          <Property Name="RightId" Type="int" />
+          <Property Name="IsDeleted" Type="bit" />
+        </EntityType>
+        <EntityType Name="Room">
+          <Key>
+            <PropertyRef Name="RoomId" />
+          </Key>
+          <Property Name="RoomId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RoomName" Type="nvarchar" MaxLength="50" />
+          <Property Name="IsDeleted" Type="bit" />
+        </EntityType>
+        <EntityType Name="StatusAsset">
+          <Key>
+            <PropertyRef Name="StatusAssetId" />
+          </Key>
+          <Property Name="StatusAssetId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StatusAsset" Type="nvarchar" MaxLength="50" />
+          <Property Name="IsDeleted" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="StatusRequest">
+          <Key>
+            <PropertyRef Name="StatusRequestId" />
+          </Key>
+          <Property Name="StatusRequestId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StatusRequestName" Type="nvarchar" MaxLength="50" />
+          <Property Name="IsDeleted" Type="bit" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserName" Type="varchar" MaxLength="50" />
+          <Property Name="Password" Type="varchar" MaxLength="50" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="IsDeleted" Type="bit" />
+        </EntityType>
+        <EntityType Name="UserRole">
+          <Key>
+            <PropertyRef Name="UserRoleId" />
+          </Key>
+          <Property Name="UserRoleId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="int" />
+          <Property Name="RoleId" Type="int" />
+          <Property Name="IsDeleted" Type="bit" />
+        </EntityType>
+        <Association Name="FK_AssetInRoom_Asset">
+          <End Role="Asset" Type="Self.Asset" Multiplicity="0..1" />
+          <End Role="AssetInRoom" Type="Self.AssetInRoom" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Asset">
+              <PropertyRef Name="AssetId" />
+            </Principal>
+            <Dependent Role="AssetInRoom">
+              <PropertyRef Name="AssetId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AssetInRoom_Room">
+          <End Role="Room" Type="Self.Room" Multiplicity="0..1" />
+          <End Role="AssetInRoom" Type="Self.AssetInRoom" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Room">
+              <PropertyRef Name="RoomId" />
+            </Principal>
+            <Dependent Role="AssetInRoom">
+              <PropertyRef Name="RoomId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AssetInRoom_StatusAsset">
+          <End Role="StatusAsset" Type="Self.StatusAsset" Multiplicity="0..1" />
+          <End Role="AssetInRoom" Type="Self.AssetInRoom" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StatusAsset">
+              <PropertyRef Name="StatusAssetId" />
+            </Principal>
+            <Dependent Role="AssetInRoom">
+              <PropertyRef Name="StatusAssetId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RequestAsset_RequestType">
+          <End Role="RequestType" Type="Self.RequestType" Multiplicity="0..1" />
+          <End Role="RequestAsset" Type="Self.RequestAsset" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RequestType">
+              <PropertyRef Name="RequestTypeId" />
+            </Principal>
+            <Dependent Role="RequestAsset">
+              <PropertyRef Name="RequestTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RequestAsset_StatusRequest">
+          <End Role="StatusRequest" Type="Self.StatusRequest" Multiplicity="0..1" />
+          <End Role="RequestAsset" Type="Self.RequestAsset" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StatusRequest">
+              <PropertyRef Name="StatusRequestId" />
+            </Principal>
+            <Dependent Role="RequestAsset">
+              <PropertyRef Name="StatusRequestId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RoleRight_Right">
+          <End Role="Right" Type="Self.Right" Multiplicity="0..1" />
+          <End Role="RoleRight" Type="Self.RoleRight" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Right">
+              <PropertyRef Name="RightId" />
+            </Principal>
+            <Dependent Role="RoleRight">
+              <PropertyRef Name="RightId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RoleRight_Role">
+          <End Role="Role" Type="Self.Role" Multiplicity="0..1" />
+          <End Role="RoleRight" Type="Self.RoleRight" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="RoleId" />
+            </Principal>
+            <Dependent Role="RoleRight">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserRole_Role">
+          <End Role="Role" Type="Self.Role" Multiplicity="0..1" />
+          <End Role="UserRole" Type="Self.UserRole" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="RoleId" />
+            </Principal>
+            <Dependent Role="UserRole">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserRole_User">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="UserRole" Type="Self.UserRole" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="UserRole">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="QLCSVCModelStoreContainer">
+          <EntitySet Name="Asset" EntityType="Self.Asset" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AssetInRoom" EntityType="Self.AssetInRoom" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RequestAsset" EntityType="Self.RequestAsset" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RequestType" EntityType="Self.RequestType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Right" EntityType="Self.Right" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RoleRight" EntityType="Self.RoleRight" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Room" EntityType="Self.Room" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StatusAsset" EntityType="Self.StatusAsset" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StatusRequest" EntityType="Self.StatusRequest" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserRole" EntityType="Self.UserRole" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_AssetInRoom_Asset" Association="Self.FK_AssetInRoom_Asset">
+            <End Role="Asset" EntitySet="Asset" />
+            <End Role="AssetInRoom" EntitySet="AssetInRoom" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AssetInRoom_Room" Association="Self.FK_AssetInRoom_Room">
+            <End Role="Room" EntitySet="Room" />
+            <End Role="AssetInRoom" EntitySet="AssetInRoom" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AssetInRoom_StatusAsset" Association="Self.FK_AssetInRoom_StatusAsset">
+            <End Role="StatusAsset" EntitySet="StatusAsset" />
+            <End Role="AssetInRoom" EntitySet="AssetInRoom" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RequestAsset_RequestType" Association="Self.FK_RequestAsset_RequestType">
+            <End Role="RequestType" EntitySet="RequestType" />
+            <End Role="RequestAsset" EntitySet="RequestAsset" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RequestAsset_StatusRequest" Association="Self.FK_RequestAsset_StatusRequest">
+            <End Role="StatusRequest" EntitySet="StatusRequest" />
+            <End Role="RequestAsset" EntitySet="RequestAsset" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RoleRight_Right" Association="Self.FK_RoleRight_Right">
+            <End Role="Right" EntitySet="Right" />
+            <End Role="RoleRight" EntitySet="RoleRight" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RoleRight_Role" Association="Self.FK_RoleRight_Role">
+            <End Role="Role" EntitySet="Role" />
+            <End Role="RoleRight" EntitySet="RoleRight" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserRole_Role" Association="Self.FK_UserRole_Role">
+            <End Role="Role" EntitySet="Role" />
+            <End Role="UserRole" EntitySet="UserRole" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserRole_User" Association="Self.FK_UserRole_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="UserRole" EntitySet="UserRole" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="QLCSVCModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Asset">
+          <Key>
+            <PropertyRef Name="AssetId" />
+          </Key>
+          <Property Name="AssetId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AssetName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="AssetImage" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IsDeleted" Type="Boolean" />
+          <NavigationProperty Name="AssetInRooms" Relationship="Self.FK_AssetInRoom_Asset" FromRole="Asset" ToRole="AssetInRoom" />
+        </EntityType>
+        <EntityType Name="AssetInRoom">
+          <Key>
+            <PropertyRef Name="AssetInRoomId" />
+          </Key>
+          <Property Name="AssetInRoomId" Type="Int32" Nullable="false" />
+          <Property Name="AssetId" Type="Int32" />
+          <Property Name="RoomId" Type="Int32" />
+          <Property Name="StatusAssetId" Type="Int32" />
+          <Property Name="IsDeleted" Type="Boolean" />
+          <NavigationProperty Name="Asset" Relationship="Self.FK_AssetInRoom_Asset" FromRole="AssetInRoom" ToRole="Asset" />
+          <NavigationProperty Name="Room" Relationship="Self.FK_AssetInRoom_Room" FromRole="AssetInRoom" ToRole="Room" />
+          <NavigationProperty Name="StatusAsset" Relationship="Self.FK_AssetInRoom_StatusAsset" FromRole="AssetInRoom" ToRole="StatusAsset" />
+        </EntityType>
+        <EntityType Name="RequestAsset">
+          <Key>
+            <PropertyRef Name="RequestAssetId" />
+          </Key>
+          <Property Name="RequestAssetId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AssetId" Type="Int32" />
+          <Property Name="RequestTypeId" Type="Int32" />
+          <Property Name="RoomId" Type="Int32" />
+          <Property Name="RequestBy" Type="Int32" />
+          <Property Name="StatusRequestId" Type="Int32" />
+          <Property Name="IsDeleted" Type="Boolean" />
+          <NavigationProperty Name="RequestType" Relationship="Self.FK_RequestAsset_RequestType" FromRole="RequestAsset" ToRole="RequestType" />
+          <NavigationProperty Name="StatusRequest" Relationship="Self.FK_RequestAsset_StatusRequest" FromRole="RequestAsset" ToRole="StatusRequest" />
+        </EntityType>
+        <EntityType Name="RequestType">
+          <Key>
+            <PropertyRef Name="RequestTypeId" />
+          </Key>
+          <Property Name="RequestTypeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RequestTypeName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IsDeleted" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="RequestAssets" Relationship="Self.FK_RequestAsset_RequestType" FromRole="RequestType" ToRole="RequestAsset" />
+        </EntityType>
+        <EntityType Name="Right">
+          <Key>
+            <PropertyRef Name="RightId" />
+          </Key>
+          <Property Name="RightId" Type="Int32" Nullable="false" />
+          <Property Name="RightName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IsDeleted" Type="Boolean" />
+          <NavigationProperty Name="RoleRights" Relationship="Self.FK_RoleRight_Right" FromRole="Right" ToRole="RoleRight" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="RoleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RoleName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IsDeleted" Type="Boolean" />
+          <NavigationProperty Name="RoleRights" Relationship="Self.FK_RoleRight_Role" FromRole="Role" ToRole="RoleRight" />
+          <NavigationProperty Name="UserRoles" Relationship="Self.FK_UserRole_Role" FromRole="Role" ToRole="UserRole" />
+        </EntityType>
+        <EntityType Name="RoleRight">
+          <Key>
+            <PropertyRef Name="RoleRightId" />
+          </Key>
+          <Property Name="RoleRightId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RoleId" Type="Int32" />
+          <Property Name="RightId" Type="Int32" />
+          <Property Name="IsDeleted" Type="Boolean" />
+          <NavigationProperty Name="Right" Relationship="Self.FK_RoleRight_Right" FromRole="RoleRight" ToRole="Right" />
+          <NavigationProperty Name="Role" Relationship="Self.FK_RoleRight_Role" FromRole="RoleRight" ToRole="Role" />
+        </EntityType>
+        <EntityType Name="Room">
+          <Key>
+            <PropertyRef Name="RoomId" />
+          </Key>
+          <Property Name="RoomId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RoomName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IsDeleted" Type="Boolean" />
+          <NavigationProperty Name="AssetInRooms" Relationship="Self.FK_AssetInRoom_Room" FromRole="Room" ToRole="AssetInRoom" />
+        </EntityType>
+        <EntityType Name="StatusAsset">
+          <Key>
+            <PropertyRef Name="StatusAssetId" />
+          </Key>
+          <Property Name="StatusAssetId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StatusAsset1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IsDeleted" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AssetInRooms" Relationship="Self.FK_AssetInRoom_StatusAsset" FromRole="StatusAsset" ToRole="AssetInRoom" />
+        </EntityType>
+        <EntityType Name="StatusRequest">
+          <Key>
+            <PropertyRef Name="StatusRequestId" />
+          </Key>
+          <Property Name="StatusRequestId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StatusRequestName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IsDeleted" Type="Boolean" />
+          <NavigationProperty Name="RequestAssets" Relationship="Self.FK_RequestAsset_StatusRequest" FromRole="StatusRequest" ToRole="RequestAsset" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IsDeleted" Type="Boolean" />
+          <NavigationProperty Name="UserRoles" Relationship="Self.FK_UserRole_User" FromRole="User" ToRole="UserRole" />
+        </EntityType>
+        <EntityType Name="UserRole">
+          <Key>
+            <PropertyRef Name="UserRoleId" />
+          </Key>
+          <Property Name="UserRoleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" />
+          <Property Name="RoleId" Type="Int32" />
+          <Property Name="IsDeleted" Type="Boolean" />
+          <NavigationProperty Name="Role" Relationship="Self.FK_UserRole_Role" FromRole="UserRole" ToRole="Role" />
+          <NavigationProperty Name="User" Relationship="Self.FK_UserRole_User" FromRole="UserRole" ToRole="User" />
+        </EntityType>
+        <Association Name="FK_AssetInRoom_Asset">
+          <End Role="Asset" Type="Self.Asset" Multiplicity="0..1" />
+          <End Role="AssetInRoom" Type="Self.AssetInRoom" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Asset">
+              <PropertyRef Name="AssetId" />
+            </Principal>
+            <Dependent Role="AssetInRoom">
+              <PropertyRef Name="AssetId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AssetInRoom_Room">
+          <End Role="Room" Type="Self.Room" Multiplicity="0..1" />
+          <End Role="AssetInRoom" Type="Self.AssetInRoom" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Room">
+              <PropertyRef Name="RoomId" />
+            </Principal>
+            <Dependent Role="AssetInRoom">
+              <PropertyRef Name="RoomId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AssetInRoom_StatusAsset">
+          <End Role="StatusAsset" Type="Self.StatusAsset" Multiplicity="0..1" />
+          <End Role="AssetInRoom" Type="Self.AssetInRoom" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StatusAsset">
+              <PropertyRef Name="StatusAssetId" />
+            </Principal>
+            <Dependent Role="AssetInRoom">
+              <PropertyRef Name="StatusAssetId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RequestAsset_RequestType">
+          <End Role="RequestType" Type="Self.RequestType" Multiplicity="0..1" />
+          <End Role="RequestAsset" Type="Self.RequestAsset" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RequestType">
+              <PropertyRef Name="RequestTypeId" />
+            </Principal>
+            <Dependent Role="RequestAsset">
+              <PropertyRef Name="RequestTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RequestAsset_StatusRequest">
+          <End Role="StatusRequest" Type="Self.StatusRequest" Multiplicity="0..1" />
+          <End Role="RequestAsset" Type="Self.RequestAsset" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StatusRequest">
+              <PropertyRef Name="StatusRequestId" />
+            </Principal>
+            <Dependent Role="RequestAsset">
+              <PropertyRef Name="StatusRequestId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RoleRight_Right">
+          <End Role="Right" Type="Self.Right" Multiplicity="0..1" />
+          <End Role="RoleRight" Type="Self.RoleRight" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Right">
+              <PropertyRef Name="RightId" />
+            </Principal>
+            <Dependent Role="RoleRight">
+              <PropertyRef Name="RightId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RoleRight_Role">
+          <End Role="Role" Type="Self.Role" Multiplicity="0..1" />
+          <End Role="RoleRight" Type="Self.RoleRight" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="RoleId" />
+            </Principal>
+            <Dependent Role="RoleRight">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserRole_Role">
+          <End Role="Role" Type="Self.Role" Multiplicity="0..1" />
+          <End Role="UserRole" Type="Self.UserRole" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="RoleId" />
+            </Principal>
+            <Dependent Role="UserRole">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserRole_User">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="UserRole" Type="Self.UserRole" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="UserRole">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="QLCSVCEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Assets" EntityType="Self.Asset" />
+          <EntitySet Name="AssetInRooms" EntityType="Self.AssetInRoom" />
+          <EntitySet Name="RequestAssets" EntityType="Self.RequestAsset" />
+          <EntitySet Name="RequestTypes" EntityType="Self.RequestType" />
+          <EntitySet Name="Rights" EntityType="Self.Right" />
+          <EntitySet Name="Roles" EntityType="Self.Role" />
+          <EntitySet Name="RoleRights" EntityType="Self.RoleRight" />
+          <EntitySet Name="Rooms" EntityType="Self.Room" />
+          <EntitySet Name="StatusAssets" EntityType="Self.StatusAsset" />
+          <EntitySet Name="StatusRequests" EntityType="Self.StatusRequest" />
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <EntitySet Name="UserRoles" EntityType="Self.UserRole" />
+          <AssociationSet Name="FK_AssetInRoom_Asset" Association="Self.FK_AssetInRoom_Asset">
+            <End Role="Asset" EntitySet="Assets" />
+            <End Role="AssetInRoom" EntitySet="AssetInRooms" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AssetInRoom_Room" Association="Self.FK_AssetInRoom_Room">
+            <End Role="Room" EntitySet="Rooms" />
+            <End Role="AssetInRoom" EntitySet="AssetInRooms" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AssetInRoom_StatusAsset" Association="Self.FK_AssetInRoom_StatusAsset">
+            <End Role="StatusAsset" EntitySet="StatusAssets" />
+            <End Role="AssetInRoom" EntitySet="AssetInRooms" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RequestAsset_RequestType" Association="Self.FK_RequestAsset_RequestType">
+            <End Role="RequestType" EntitySet="RequestTypes" />
+            <End Role="RequestAsset" EntitySet="RequestAssets" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RequestAsset_StatusRequest" Association="Self.FK_RequestAsset_StatusRequest">
+            <End Role="StatusRequest" EntitySet="StatusRequests" />
+            <End Role="RequestAsset" EntitySet="RequestAssets" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RoleRight_Right" Association="Self.FK_RoleRight_Right">
+            <End Role="Right" EntitySet="Rights" />
+            <End Role="RoleRight" EntitySet="RoleRights" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RoleRight_Role" Association="Self.FK_RoleRight_Role">
+            <End Role="Role" EntitySet="Roles" />
+            <End Role="RoleRight" EntitySet="RoleRights" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserRole_Role" Association="Self.FK_UserRole_Role">
+            <End Role="Role" EntitySet="Roles" />
+            <End Role="UserRole" EntitySet="UserRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserRole_User" Association="Self.FK_UserRole_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="UserRole" EntitySet="UserRoles" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="QLCSVCModelStoreContainer" CdmEntityContainer="QLCSVCEntities">
+          <EntitySetMapping Name="Assets">
+            <EntityTypeMapping TypeName="QLCSVCModel.Asset">
+              <MappingFragment StoreEntitySet="Asset">
+                <ScalarProperty Name="AssetId" ColumnName="AssetId" />
+                <ScalarProperty Name="AssetName" ColumnName="AssetName" />
+                <ScalarProperty Name="AssetImage" ColumnName="AssetImage" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AssetInRooms">
+            <EntityTypeMapping TypeName="QLCSVCModel.AssetInRoom">
+              <MappingFragment StoreEntitySet="AssetInRoom">
+                <ScalarProperty Name="AssetInRoomId" ColumnName="AssetInRoomId" />
+                <ScalarProperty Name="AssetId" ColumnName="AssetId" />
+                <ScalarProperty Name="RoomId" ColumnName="RoomId" />
+                <ScalarProperty Name="StatusAssetId" ColumnName="StatusAssetId" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RequestAssets">
+            <EntityTypeMapping TypeName="QLCSVCModel.RequestAsset">
+              <MappingFragment StoreEntitySet="RequestAsset">
+                <ScalarProperty Name="RequestAssetId" ColumnName="RequestAssetId" />
+                <ScalarProperty Name="AssetId" ColumnName="AssetId" />
+                <ScalarProperty Name="RequestTypeId" ColumnName="RequestTypeId" />
+                <ScalarProperty Name="RoomId" ColumnName="RoomId" />
+                <ScalarProperty Name="RequestBy" ColumnName="RequestBy" />
+                <ScalarProperty Name="StatusRequestId" ColumnName="StatusRequestId" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RequestTypes">
+            <EntityTypeMapping TypeName="QLCSVCModel.RequestType">
+              <MappingFragment StoreEntitySet="RequestType">
+                <ScalarProperty Name="RequestTypeId" ColumnName="RequestTypeId" />
+                <ScalarProperty Name="RequestTypeName" ColumnName="RequestTypeName" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Rights">
+            <EntityTypeMapping TypeName="QLCSVCModel.Right">
+              <MappingFragment StoreEntitySet="Right">
+                <ScalarProperty Name="RightId" ColumnName="RightId" />
+                <ScalarProperty Name="RightName" ColumnName="RightName" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Roles">
+            <EntityTypeMapping TypeName="QLCSVCModel.Role">
+              <MappingFragment StoreEntitySet="Role">
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RoleRights">
+            <EntityTypeMapping TypeName="QLCSVCModel.RoleRight">
+              <MappingFragment StoreEntitySet="RoleRight">
+                <ScalarProperty Name="RoleRightId" ColumnName="RoleRightId" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="RightId" ColumnName="RightId" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Rooms">
+            <EntityTypeMapping TypeName="QLCSVCModel.Room">
+              <MappingFragment StoreEntitySet="Room">
+                <ScalarProperty Name="RoomId" ColumnName="RoomId" />
+                <ScalarProperty Name="RoomName" ColumnName="RoomName" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StatusAssets">
+            <EntityTypeMapping TypeName="QLCSVCModel.StatusAsset">
+              <MappingFragment StoreEntitySet="StatusAsset">
+                <ScalarProperty Name="StatusAssetId" ColumnName="StatusAssetId" />
+                <ScalarProperty Name="StatusAsset1" ColumnName="StatusAsset" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StatusRequests">
+            <EntityTypeMapping TypeName="QLCSVCModel.StatusRequest">
+              <MappingFragment StoreEntitySet="StatusRequest">
+                <ScalarProperty Name="StatusRequestId" ColumnName="StatusRequestId" />
+                <ScalarProperty Name="StatusRequestName" ColumnName="StatusRequestName" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="QLCSVCModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserRoles">
+            <EntityTypeMapping TypeName="QLCSVCModel.UserRole">
+              <MappingFragment StoreEntitySet="UserRole">
+                <ScalarProperty Name="UserRoleId" ColumnName="UserRoleId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
