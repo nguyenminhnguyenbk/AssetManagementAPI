@@ -190,7 +190,17 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
+    <Compile Include="Controllers\AssetInRoomsController.cs" />
+    <Compile Include="Controllers\AssetsController.cs" />
+    <Compile Include="Controllers\RequestAssetsController.cs" />
+    <Compile Include="Controllers\RequestTypesController.cs" />
+    <Compile Include="Controllers\RightsController.cs" />
+    <Compile Include="Controllers\RoleRightsController.cs" />
+    <Compile Include="Controllers\RolesController.cs" />
     <Compile Include="Controllers\RoomsController.cs" />
+    <Compile Include="Controllers\StatusAssetsController.cs" />
+    <Compile Include="Controllers\StatusRequestsController.cs" />
+    <Compile Include="Controllers\UserRolesController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
